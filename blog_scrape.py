@@ -48,15 +48,14 @@ def check_new_titles(url, storage_file="posts.json"):
     try:
         with open(storage_file, "r") as file:
             old_posts = json.load(file)
-            print(f"old posts: {old_posts}")
     except FileNotFoundError:
         old_posts = []
 
     current_posts = fetch_blog_titles_and_links(url)
+
+    # converting tuples to lists so old posts match with new ones
     current_posts = [list(post) for post in current_posts]
-    print(f"current posts: {current_posts}")
     new_posts = [post for post in current_posts if post not in old_posts]
-    print(f"new posts: {new_posts}")
 
     with open(storage_file, "w") as file:
         json.dump(current_posts, file)
